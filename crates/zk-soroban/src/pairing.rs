@@ -19,22 +19,23 @@ impl G2Affine {
     ///
     /// ## Byte Layout
     /// The 128 bytes are structured as:
-    /// - Bytes 0..32:   `x.0` (X real)
-    /// - Bytes 32..64:  `x.1` (X imaginary)
-    /// - Bytes 64..96:  `y.0` (Y real)
-    /// - Bytes 96..128: `y.1` (Y imaginary)
+    /// - Bytes 0..32:   `x.1` (X imaginary)
+    /// - Bytes 32..64:  `x.0` (X real)
+    /// - Bytes 64..96:  `y.1` (Y imaginary)
+    /// - Bytes 96..128: `y.0` (Y real)
     ///
     /// All 32-byte chunks are encoded in Big-Endian format.
     pub fn to_bytes(&self) -> [u8; 128] {
         let mut bytes = [0u8; 128];
-        // Sequence: X_c0, X_c1, Y_c0, Y_c1 (Big Endian)
-        bytes[0..32].copy_from_slice(&self.x.0.to_be_bytes()); // X c0
-        bytes[32..64].copy_from_slice(&self.x.1.to_be_bytes()); // X c1
-        bytes[64..96].copy_from_slice(&self.y.0.to_be_bytes()); // Y c0
-        bytes[96..128].copy_from_slice(&self.y.1.to_be_bytes()); // Y c1
+        // CAP-0074 Sequence: X_c1, X_c0, Y_c1, Y_c0 (Imaginary first, then Real)
+        bytes[0..32].copy_from_slice(&self.x.1.to_be_bytes());   // X c1
+        bytes[32..64].copy_from_slice(&self.x.0.to_be_bytes());  // X c0
+        bytes[64..96].copy_from_slice(&self.y.1.to_be_bytes());  // Y c1
+        bytes[96..128].copy_from_slice(&self.y.0.to_be_bytes()); // Y c0
         bytes
     }
 }
+
 
 /// Evaluates the BN254 pairing check e(A1, B1) * ... * e(An, Bn) == 1.
 pub fn pairing_check(env: &Env, pairs: &[(G1Affine, G2Affine)]) -> Result<bool, ZkError> {
