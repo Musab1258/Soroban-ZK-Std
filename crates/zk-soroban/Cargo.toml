@@ -25,4 +25,3 @@ soroban-sdk = { workspace = true, features = ["testutils"] }
 
 [[bench]]
 name = "instruction_cost"
-
