@@ -73,7 +73,6 @@ mod tests {
     use ethnum::u256;
     use soroban_sdk::Env;
 
-    // BN254 G1 generator
     fn g1_generator() -> G1Affine {
         G1Affine {
             x: u256::from(1u8),
@@ -81,8 +80,6 @@ mod tests {
         }
     }
 
-    // Negation of the BN254 G1 generator: (x, p - y)
-    // p = 0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd47
     fn g1_generator_neg() -> G1Affine {
         G1Affine {
             x: u256::from(1u8),
@@ -94,17 +91,16 @@ mod tests {
         }
     }
 
-    // Standard BN254 G2 generator (canonical EIP-197 coordinates)
     fn g2_generator() -> G2Affine {
         G2Affine {
             x: (
-                // x_c0 (real)
+                // c0 (real) — FIRST in tuple -> x.0
                 u256::from_str_radix(
                     "1800deef121f1e76426a00665e5c4479674322d4f75edadd46debd5cd992f6ed",
                     16,
                 )
                 .unwrap(),
-                // x_c1 (imaginary)
+                // c1 (imaginary) — SECOND in tuple -> x.1
                 u256::from_str_radix(
                     "198e9393920d483a7260bfb731fb5d25f1aa493335a9e71297e485b7aef312c2",
                     16,
@@ -112,13 +108,13 @@ mod tests {
                 .unwrap(),
             ),
             y: (
-                // y_c0 (real)
+                // c0 (real) — FIRST in tuple -> y.0
                 u256::from_str_radix(
                     "12c85ea5db8c6deb4aab71808dcb408fe3d1e7690c43d37b4ce6cc0166fa7daa",
                     16,
                 )
                 .unwrap(),
-                // y_c1 (imaginary)
+                // c1 (imaginary) — SECOND in tuple -> y.1
                 u256::from_str_radix(
                     "090689d0585ff075ec9e99ad690c3395bc4b313370b38ef355acdadcd122975b",
                     16,
