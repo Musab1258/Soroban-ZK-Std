@@ -172,6 +172,17 @@ impl MyContract {
               Define and evaluate dense and sparse polynomials.
             </p>
           </a>
+          <a
+            href="/docs/content"
+            className="group p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-200 hover:shadow-sm"
+          >
+            <h3 className="font-bold text-black dark:text-white mb-1 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors">
+              MDX Content →
+            </h3>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+              Documentation authored in MDX with embedded React components.
+            </p>
+          </a>
         </div>
       </section>
     </DocsLayout>

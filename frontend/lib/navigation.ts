@@ -40,6 +40,14 @@ export const navigation: NavItem[] = [
       { title: "Shielded Assets", href: "/docs/shielded-assets" },
     ],
   },
+  {
+    title: "MDX Content",
+    children: [
+      { title: "MDX Docs Index", href: "/docs/content" },
+      { title: "Getting Started (MDX)", href: "/docs/content/getting-started" },
+      { title: "MDX Authoring Guide", href: "/docs/content/mdx-guide" },
+    ],
+  },
 ];
 
 export function getFlatNavItems(): { title: string; href: string }[] {

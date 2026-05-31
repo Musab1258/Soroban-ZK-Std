@@ -3,11 +3,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-<<<<<<< version-selector-keyboard-nav
 import { VersionSelector } from "./version-selector/VersionSelector";
 import { useDocVersion } from "../hooks/useDocVersion";
-=======
->>>>>>> main
 
 interface NavItem {
   title: string;
@@ -54,6 +51,14 @@ const navigation: NavItem[] = [
       { title: "CAP-0075 Integration", href: "/docs/cap0075" },
       { title: "ASP Integration", href: "/docs/asp-integration" },
       { title: "Shielded Assets", href: "/docs/shielded-assets" },
+    ],
+  },
+  {
+    title: "MDX Content",
+    children: [
+      { title: "MDX Docs Index", href: "/docs/content" },
+      { title: "Getting Started (MDX)", href: "/docs/content/getting-started" },
+      { title: "MDX Authoring Guide", href: "/docs/content/mdx-guide" },
     ],
   },
 ];
