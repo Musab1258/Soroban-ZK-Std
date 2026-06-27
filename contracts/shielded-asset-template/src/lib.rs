@@ -1,10 +1,10 @@
 #![no_std]
 
+use ethnum::u256;
 use soroban_sdk::{contract, contractimpl, contracttype, Address, Bytes, Env};
-use soroban_zk_core::{ElGamalCiphertext, G1Affine};
+use soroban_zk_core::G1Affine;
 use soroban_zk_std::groth16::{groth16_verify, Groth16Proof, Groth16VerifyingKey};
 use soroban_zk_std::pairing::G2Affine;
-use ethnum::u256;
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -55,16 +55,18 @@ impl ShieldedAsset {
         // This utilizes Soroban-ZK-Std's Protocol 25 optimized multi-pairing checks under the hood!
         let is_valid = groth16_verify(&env, &vk, &proof, &[public_input])
             .expect("Verification failed due to malformed points");
-        
+
         if !is_valid {
             panic!("ZK Proof is invalid! Transfer rejected.");
         }
 
         // 5. ZK Proof passed! Update the encrypted balances via Homomorphic Addition
         // (Implementation of homomorphic addition omitted for brevity in this template)
-        
+
         // Example event emission to notify watchers
-        env.events().publish((sender, receiver), "Shielded Transfer Verified");
+        #[allow(deprecated)]
+        env.events()
+            .publish((sender, receiver), "Shielded Transfer Verified");
     }
 }
 
@@ -72,10 +74,22 @@ impl ShieldedAsset {
 fn get_verifying_key<'a>() -> Groth16VerifyingKey<'a> {
     // Dummy empty keys for compilation. In production, these are the real curve points.
     Groth16VerifyingKey {
-        alpha_g1: G1Affine { x: u256::from(0u8), y: u256::from(0u8) },
-        beta_g2: G2Affine { x: (u256::from(0u8), u256::from(0u8)), y: (u256::from(0u8), u256::from(0u8)) },
-        gamma_g2: G2Affine { x: (u256::from(0u8), u256::from(0u8)), y: (u256::from(0u8), u256::from(0u8)) },
-        delta_g2: G2Affine { x: (u256::from(0u8), u256::from(0u8)), y: (u256::from(0u8), u256::from(0u8)) },
+        alpha_g1: G1Affine {
+            x: u256::from(0u8),
+            y: u256::from(0u8),
+        },
+        beta_g2: G2Affine {
+            x: (u256::from(0u8), u256::from(0u8)),
+            y: (u256::from(0u8), u256::from(0u8)),
+        },
+        gamma_g2: G2Affine {
+            x: (u256::from(0u8), u256::from(0u8)),
+            y: (u256::from(0u8), u256::from(0u8)),
+        },
+        delta_g2: G2Affine {
+            x: (u256::from(0u8), u256::from(0u8)),
+            y: (u256::from(0u8), u256::from(0u8)),
+        },
         ic: &[], // Array of G1 points for public inputs
     }
 }
